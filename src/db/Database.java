@@ -1,12 +1,15 @@
 /**
  * 
  */
-package main;
+package db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import main.Exceptions;
 
 /**
  * @author Balint I. Francisc
@@ -22,15 +25,15 @@ public class Database {
 	static final String USER = "root";
 	static final String PASS = "root";
 
-	protected Connection connect = null;
+	protected Connection connect;
 
 	// Store the single instance.
-	private Statement statement = null;
+	protected Statement statement = null;
 
-	protected java.sql.PreparedStatement preStatement = null;
+	protected PreparedStatement preStatement = null;
 	private ResultSet resultSet = null;
 
-	Database() {
+	protected Database() {
 		try {
 			Class.forName(JDBC_DRIVER);
 
