@@ -33,7 +33,7 @@ public class Database {
 	protected PreparedStatement preStatement = null;
 	private ResultSet resultSet = null;
 
-	protected Database() {
+	public Database() {
 		try {
 			Class.forName(JDBC_DRIVER);
 

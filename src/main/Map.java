@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.ImageIcon;
 
@@ -33,12 +34,14 @@ import processing.core.PVector;
  * @author Balint I. Francisc
  *
  */
-public class app extends PApplet {
+public class Map extends PApplet {
 
 	/**
 	 * Something to make eclipse happy
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public static final CountDownLatch latch = new CountDownLatch(1);
 
 	// The map
 	UnfoldingMap map;
@@ -67,7 +70,7 @@ public class app extends PApplet {
 
 	// One time setup the PApplet
 	public void setup() {
-		
+
 		setTitle("Earthquake App");
 		setIcon();
 
@@ -97,13 +100,13 @@ public class app extends PApplet {
 		for (Feature city : cities) {
 			cityMarkers.add(new CityMarker(city));
 		}
-		
-		 // STEP 3: read in earthquake RSS feed
-		  DBQuakes dbquakes = new DBQuakes();
-		  List<PointFeature> earthquakes = dbquakes.get();
-		 quakeMarkers = new ArrayList<Marker>();
-		
-		 for (PointFeature feature : earthquakes) {
+
+		// STEP 3: read in earthquake RSS feed
+		DBQuakes dbquakes = new DBQuakes();
+		List<PointFeature> earthquakes = dbquakes.get();
+		quakeMarkers = new ArrayList<Marker>();
+
+		for (PointFeature feature : earthquakes) {
 			// check if LandQuake
 			if (isLand(feature)) {
 				quakeMarkers.add(new LandQuakeMarker(feature));
@@ -112,7 +115,7 @@ public class app extends PApplet {
 			else {
 				quakeMarkers.add(new OceanQuakeMarker(feature));
 			}
-		 }
+		}
 
 		// This is used for debugging
 		// printQuakes();
@@ -564,8 +567,7 @@ public class app extends PApplet {
 		int len = listIcons.length;
 		for (int i = 1; i < len; i++) {
 			Image image = new ImageIcon(
-					pathIcons.getPath() + "/" + listIcons[i])
-					.getImage();
+					pathIcons.getPath() + "/" + listIcons[i]).getImage();
 			icons.add(image);
 		}
 
@@ -587,6 +589,6 @@ public class app extends PApplet {
 
 	// Run PApplet as java application
 	public static void main(String[] args) {
-		PApplet.main(new String[]{"--present", "main.app"});
+		PApplet.main(new String[]{"--present", "main.Map"});
 	}
 }
