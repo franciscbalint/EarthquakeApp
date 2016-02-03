@@ -1,4 +1,4 @@
-# EarthquakeApp - Object-Oriented-Programming-in-Java
+# EarthquakeApp
 Coursera - Object Oriented Programming in Java by University of California, San Diego
 https://www.coursera.org/learn/object-oriented-java/
 #About this Course
